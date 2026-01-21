@@ -21,14 +21,29 @@
       border-bottom: 2px solid var(--theme-color);
       padding-bottom: 10px;
     }
-    .markdown-section code {
-      background-color: #f8f8f8;
+    .markdown-section > p code,
+    .markdown-section > ul code,
+    .markdown-section > ol code {
+      background-color: #f5f5f5;
       border-radius: 3px;
       padding: 2px 6px;
+      color: #e96900;
     }
     .markdown-section pre {
-      background-color: #1e1e1e;
+      background-color: #2d2d2d;
       border-radius: 8px;
+      padding: 1em;
+      margin: 1em 0;
+      overflow: auto;
+    }
+    .markdown-section pre > code {
+      background-color: transparent;
+      padding: 0;
+      border-radius: 0;
+      color: #ccc;
+    }
+    .markdown-section code {
+      border-radius: 3px;
     }
     .katex-display {
       overflow-x: auto;
@@ -54,6 +69,9 @@
       name: '📚 学习笔记',
       repo: 'https://github.com/YovRen/notes',
       loadSidebar: true,
+      alias: {
+        '/.*/_sidebar.md': '/_sidebar.md'
+      },
       subMaxLevel: 3,
       auto2top: true,
       search: {
