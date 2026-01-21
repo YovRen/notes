@@ -7,6 +7,7 @@
   <meta name="description" content="技术学习笔记汇总">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <style>
     :root {
       --theme-color: #3498db;
@@ -33,10 +34,21 @@
       overflow-x: auto;
       overflow-y: hidden;
     }
+    .mermaid {
+      background: #fff;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
   <div id="app">加载中...</div>
+  
+  <!-- Mermaid 必须在 docsify 配置之前加载 -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: false, theme: 'default' });
+  </script>
+  
   <script>
     window.$docsify = {
       name: '📚 学习笔记',
@@ -61,7 +73,24 @@
         nextText: '下一章',
         crossChapter: true,
         crossChapterText: true
-      }
+      },
+      markdown: {
+        renderer: {
+          code: function(code, lang) {
+            if (lang === 'mermaid') {
+              return '<div class="mermaid">' + code + '</div>';
+            }
+            return this.origin.code.apply(this, arguments);
+          }
+        }
+      },
+      plugins: [
+        function(hook) {
+          hook.doneEach(function() {
+            mermaid.init(undefined, '.mermaid');
+          });
+        }
+      ]
     }
   </script>
   
@@ -82,18 +111,10 @@
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-scala.min.js"></script>
   
   <!-- 数学公式支持 (KaTeX) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify-katex@1.4.4/dist/docsify-katex.js"></script>
   
   <!-- 分页导航 -->
   <script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
-  
-  <!-- Mermaid 流程图支持 -->
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify-mermaid@2/dist/docsify-mermaid.js"></script>
-  <script>
-    mermaid.initialize({ startOnLoad: false, theme: 'default' });
-  </script>
 </body>
 </html>
